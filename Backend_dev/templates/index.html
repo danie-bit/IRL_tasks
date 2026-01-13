@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Regex Tester</title>
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            font-family: Inter, Arial, sans-serif;
+            background: linear-gradient(120deg,#0f0f14,#1a1b22);
+            color: #eaeaf0;
+            min-height: 100vh;
+        }
+
+        .app {
+            max-width: 1100px;
+            margin: auto;
+            padding: 40px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 36px;
+            letter-spacing: 1px;
+        }
+
+        .header p {
+            color: #aaa;
+            margin-top: 8px;
+        }
+
+        .panel {
+            background: #161821;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        textarea, input {
+            width: 100%;
+            background: #0f1118;
+            border: 1px solid #2a2d3a;
+            color: white;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        input:focus, textarea:focus {
+            border-color: #00ffd0;
+        }
+
+        .submit-btn {
+            margin-top: 20px;
+            background: linear-gradient(135deg,#00ffd0,#00b3ff);
+            border: none;
+            padding: 14px 28px;
+            border-radius: 10px;
+            color: black;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,255,208,0.3);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+        }
+
+        .highlight-box {
+            background: #0f1118;
+            border-radius: 10px;
+            padding: 20px;
+            min-height: 120px;
+            line-height: 1.7;
+            border: 1px solid #2a2d3a;
+        }
+
+        mark {
+            background: linear-gradient(135deg,#00ffd0,#00b3ff);
+            color: black;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .match-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .match-item {
+            background: #0f1118;
+            border: 1px solid #2a2d3a;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-family: monospace;
+            color: #00ffd0;
+        }
+
+        .error {
+            background: #2a1010;
+            border: 1px solid red;
+            padding: 12px;
+            border-radius: 8px;
+            color: #ff8080;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="app">
+
+    <div class="header">
+        <h1>Regex Visual Tester</h1>
+        <p>Test, highlight and extract regex matches in real time</p>
+    </div>
+
+    <div class="panel">
+        <form method="POST">
+            <label>Test String</label>
+            <textarea name="test_string" required>{{ text }}</textarea>
+
+            <label>Regular Expression</label>
+            <input name="regex" required>
+
+            <button class="submit-btn">Run Regex</button>
+        </form>
+
+        {% if error %}
+            <div class="error">{{ error }}</div>
+        {% endif %}
+    </div>
+
+    {% if highlighted %}
+    <div class="panel">
+        <div class="results-grid">
+
+            <div>
+                <label>Highlighted String</label>
+                <div class="highlight-box">
+                    {{ highlighted | safe }}
+                </div>
+            </div>
+
+            <div>
+                <label>Matched Substrings</label>
+                <div class="match-list">
+                    {% for m in matches %}
+                        <div class="match-item">{{ m }}</div>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+    </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
