@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container vh-100 d-flex align-items-center justify-content-center">
+    <div class="card shadow-lg p-4 url-card">
+
+        <h2 class="text-center mb-3">Shorten Your Link</h2>
+        <p class="text-center text-muted mb-4">
+            Paste a long URL and get a clean, shareable link.
+        </p>
+
+        <form method="POST">
+            <div class="input-group mb-3">
+                <input
+                    type="url"
+                    name="url"
+                    class="form-control"
+                    placeholder="https://example.com"
+                    required
+                >
+                <button class="btn btn-primary">Shorten</button>
+            </div>
+        </form>
+
+        {% if short_link %}
+        <div class="result-box mt-3">
+            <label class="form-label">Your short link</label>
+            <div class="input-group">
+                <input id="shortLink" type="text" class="form-control" value="{{ short_link }}" readonly>
+                <button class="btn btn-outline-secondary" onclick="copyLink()">Copy</button>
+            </div>
+            <small id="copyStatus" class="text-success d-none">Copied!</small>
+        </div>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h3 class="mb-4">Link History</h3>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Original URL</th>
+                <th>Short Link</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for url in urls %}
+            <tr>
+                <td class="text-truncate" style="max-width: 400px;">
+                    {{ url.original_url }}
+                </td>
+                <td>
+                    <a href="/{{ url.short_code }}" target="_blank">
+                        {{ request.host_url }}{{ url.short_code }}
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
